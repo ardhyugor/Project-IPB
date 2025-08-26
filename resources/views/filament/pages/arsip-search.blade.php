@@ -2,12 +2,14 @@
     <div class="space-y-6">
         {{-- Input Pencarian --}}
         <div>
-            <x-filament::input.wrapper>
-                <x-filament::input
-                    wire:model.debounce.500ms="search"
-                    placeholder="Cari NIP atau Nama..."
-                />
-            </x-filament::input.wrapper>
+            <form action="">
+                <x-filament::input.wrapper>
+                    <x-filament::input
+                        wire:model.debounce.500ms="search"
+                        placeholder="Cari NIP atau Nama..."
+                    />
+                </x-filament::input.wrapper>
+            </form>
         </div>
 
         <div class="grid grid-cols-2 gap-6">
