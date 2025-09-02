@@ -1,15 +1,19 @@
 <x-filament::page>
     <div class="space-y-6">
         {{-- Input Pencarian --}}
-        <div>
-            <form action="">
-                <x-filament::input.wrapper>
-                    <x-filament::input
-                        wire:model.debounce.500ms="search"
-                        placeholder="Cari NIP atau Nama..."
-                    />
-                </x-filament::input.wrapper>
-            </form>
+        <div class="flex items-center gap-2">
+            <x-filament::input.wrapper class="flex-1">
+                <x-filament::input wire:model.live="search" placeholder="Cari NIP atau Nama..." />
+            </x-filament::input.wrapper>
+
+            {{-- Tombol Reset --}}
+            <x-filament::button wire:click="$set('search', '')" color="gray">
+                Reset
+            </x-filament::button>
+        </div>
+        <div wire:loading wire:target="search" class="text-center text-gray-500">
+            <x-filament::loading-indicator class="w-6 h-6 inline-block mr-2" />
+            Sedang memuat data...
         </div>
 
         <div class="grid grid-cols-2 gap-6">
@@ -27,7 +31,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($this->pnsAktif as $row)
+                        @forelse ($this->pnsAktif as $row)
                             <tr class="border-b">
                                 <td class="p-2">{{ $row->NIP }}</td>
                                 <td class="p-2">{{ $row->NAMA }}</td>
@@ -35,7 +39,11 @@
                                 <td class="p-2">{{ $row->HAMBALAN }}</td>
                                 <td class="p-2">{{ $row->NOMORBERKAS }}</td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <div class="border-b">
+                                <td class="p-2" colspan="5">Data tidak ditemukan</td>
+                            </div>
+                        @endforelse
                     </tbody>
                 </table>
                 {{ $this->pnsAktif->links() }}
@@ -55,7 +63,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($this->pnsPensiun as $row)
+                        @forelse ($this->pnsPensiun as $row)
                             <tr class="border-b">
                                 <td class="p-2">{{ $row->NIP }}</td>
                                 <td class="p-2">{{ $row->NAMA }}</td>
@@ -63,7 +71,11 @@
                                 <td class="p-2">{{ $row->LACI }}</td>
                                 <td class="p-2">{{ $row->KODEBERKAS }}</td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr class="border-b text-center">
+                                <td class="p-2" colspan="5">Data tidak ditemukan</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
                 {{ $this->pnsPensiun->links() }}
@@ -83,7 +95,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($this->nonPnsTetap as $row)
+                        @forelse ($this->nonPnsTetap as $row)
                             <tr class="border-b">
                                 <td class="p-2">{{ $row->NIP }}</td>
                                 <td class="p-2">{{ $row->NAMA }}</td>
@@ -91,7 +103,11 @@
                                 <td class="p-2">{{ $row->LACI }}</td>
                                 <td class="p-2">{{ $row->KODEBERKAS }}</td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr class="border-b text-center">
+                                <td class="p-2" colspan="5">Data tidak ditemukan</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
                 {{ $this->nonPnsTetap->links() }}
@@ -111,7 +127,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($this->nonPnsKontrak as $row)
+                        @forelse ($this->nonPnsKontrak as $row)
                             <tr class="border-b">
                                 <td class="p-2">{{ $row->NIP }}</td>
                                 <td class="p-2">{{ $row->NAMA }}</td>
@@ -119,7 +135,11 @@
                                 <td class="p-2">{{ $row->LACI }}</td>
                                 <td class="p-2">{{ $row->KODEBERKAS }}</td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr class="border-b text-center">
+                                <td class="p-2" colspan="5">Data tidak ditemukan</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
                 {{ $this->nonPnsKontrak->links() }}
