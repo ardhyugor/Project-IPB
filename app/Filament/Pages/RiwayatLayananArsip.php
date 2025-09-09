@@ -5,91 +5,98 @@ namespace App\Filament\Pages;
 use Filament\Pages\Page;
 use Filament\Tables;
 use Filament\Tables\Table;
-use App\Models\LayananBerkas;
-use Carbon\Carbon;
+use App\Models\LayananBerkas; // sesuaikan dengan nama modelmu
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Carbon;
+use Carbon\Carbon as CarbonCarbon;
 
 class RiwayatLayananArsip extends Page implements Tables\Contracts\HasTable
 {
     use Tables\Concerns\InteractsWithTable;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clock';
-    protected static ?string $navigationLabel = 'Riwayat Layanan ';
-    protected static ?string $slug = 'riwayat-layanan-arsip';
+    protected static ?string $navigationIcon = 'heroicon-o-archive-box';
+    protected static ?string $navigationLabel = 'Riwayat Layanan Arsip';
     protected static string $view = 'filament.pages.riwayat-layanan-arsip';
 
     public function table(Table $table): Table
     {
         return $table
-            ->query(LayananBerkas::query())
+            ->query(
+                LayananBerkas::query()->latest('Tanggal')
+            )
             ->columns([
+
+                Tables\Columns\TextColumn::make('BULAN')
+                    ->label('Bln/Thn')
+                    ->formatStateUsing(fn($state, $record) => sprintf('%02d/%s', $record->BULAN, $record->TAHUN))
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('Layanan')
+                    ->label('Arsip')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('KodeBerkas')
+                    ->label('Nomor Berkas')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('SifatLayan')
+                    ->label('Sifat Layanan (Pelayanan)')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('SifatLain')
+                    ->label('Sifat Layanan (Lainnya)')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('BerkasLayan')
+                    ->label('Berkas yang dilayani (Berkas)')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('BerkasLain')
+                    ->label('Berkas yang dilayani (Lainnya)')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('Nama')
+                    ->label('Pengguna')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('UnitKerja')
+                    ->label('Unit Kerja')
+                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('Tanggal')
-                    ->label('Tanggal Pinjam')
-                    ->formatStateUsing(fn ($state) => $this->parseDate($state))
-                    ->sortable(),
+                    ->label('Tanggal')
+                    ->formatStateUsing(fn($state) => $state ? Carbon::createFromFormat('d/m/Y', $state)->format('d-m-Y') : null),
 
-                Tables\Columns\TextColumn::make('StatusBerkas')->label('Arsip')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('KodeBerkas')->label('Nomor Berkas')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('SifatLayan')->label('Sifat Layanan (Pelayanan)')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('SifatLain')->label('Sifat Layanan (Lainnya)')->sortable(),
-                Tables\Columns\TextColumn::make('BerkasLayan')->label('Berkas Dilayani'),
-                Tables\Columns\TextColumn::make('Pengguna')->label('Pengguna')->searchable(),
-                Tables\Columns\TextColumn::make('UnitKerja')->label('Unit Kerja')->searchable(),
-
-                Tables\Columns\TextColumn::make('kembali')
-                    ->label('Tanggal Kembali')
-                    ->formatStateUsing(fn ($state) => $this->parseDate($state))
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('Kembali')
+                    ->label('Kembali')
+                    ->formatStateUsing(fn($state) => $state ? Carbon::createFromFormat('d/m/Y', $state)->format('d-m-Y') : null),
             ])
+            ->defaultSort('Tanggal', 'desc')
             ->filters([
-                Tables\Filters\Filter::make('bulan_tahun')
-                    ->form([
-                        \Filament\Forms\Components\DatePicker::make('bulan_tahun')
-                            ->label('Bulan & Tahun')
-                            ->displayFormat('m/Y')
-                            ->native(false),
+                Tables\Filters\SelectFilter::make('TAHUN')
+                    ->options(
+                        LayananBerkas::select('TAHUN')->distinct()->pluck('TAHUN', 'TAHUN')
+                    )
+                    ->label('Tahun'),
+
+                Tables\Filters\SelectFilter::make('BULAN')
+                    ->options([
+                        1 => 'Januari',
+                        2 => 'Februari',
+                        3 => 'Maret',
+                        4 => 'April',
+                        5 => 'Mei',
+                        6 => 'Juni',
+                        7 => 'Juli',
+                        8 => 'Agustus',
+                        9 => 'September',
+                        10 => 'Oktober',
+                        11 => 'November',
+                        12 => 'Desember',
                     ])
-                    ->query(function ($query, array $data) {
-                        if ($data['bulan_tahun'] ?? null) {
-                            $bulan = $data['bulan_tahun']->format('m');
-                            $tahun = $data['bulan_tahun']->format('Y');
-                            $query->where('Tanggal', 'like', "%/$bulan/$tahun");
-                        }
-                    }),
-            ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\Action::make('cetak')
-                    ->label('Cetak')
-                    ->url(fn ($record) => route('cetak.layanan', $record->No))
-
-                    ->openUrlInNewTab(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkAction::make('rekap')
-                    ->label('Rekap')
-                    ->action(fn ($records) => $this->rekap($records))
-                    ->color('success')
-                    ->icon('heroicon-o-document-arrow-down'),
-            ])
-            ->defaultSort('Tanggal', 'desc');
-    }
-
-    protected function parseDate(?string $value): ?string
-    {
-        try {
-            return $value ? Carbon::createFromFormat('d/m/Y', $value)->format('d/m/Y') : null;
-        } catch (\Exception $e) {
-            return $value;
-        }
-    }
-
-    public function rekap($records)
-    {
-        // isi sesuai kebutuhan (misalnya export PDF / Excel)
-        // sementara contoh sederhana:
-        \Filament\Notifications\Notification::make()
-            ->title('Rekap berhasil dibuat')
-            ->success()
-            ->send();
+                    ->label('Bulan'),
+            ]);
     }
 }

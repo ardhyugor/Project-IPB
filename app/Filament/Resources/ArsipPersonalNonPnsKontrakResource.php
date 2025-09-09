@@ -79,10 +79,12 @@ class ArsipPersonalNonPnsKontrakResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\deleteAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make(
-                 (new static())->getLayananBulkActions()
+                    (new static())->getLayananBulkActions()
                 ),
             ]);
     }

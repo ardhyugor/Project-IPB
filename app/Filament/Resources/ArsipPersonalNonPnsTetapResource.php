@@ -79,10 +79,11 @@ class ArsipPersonalNonPnsTetapResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\deleteAction::make(),
             ])
-             ->bulkActions([
+            ->bulkActions([
                 Tables\Actions\BulkActionGroup::make(
-                 (new static())->getLayananBulkActions()
+                    (new static())->getLayananBulkActions()
                 ),
             ]);
     }

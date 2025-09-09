@@ -20,7 +20,7 @@
             {{-- PNS Aktif --}}
             <x-filament::card>
                 <h2 class="text-lg font-bold">PNS / CPNS Aktif</h2>
-                <table class="w-full text-sm">
+                <table class="w-full text-sm mb-4">
                     <thead>
                         <tr class="border-b">
                             <th class="p-2">NIP</th>
@@ -52,7 +52,7 @@
             {{-- PNS Pensiun --}}
             <x-filament::card>
                 <h2 class="text-lg font-bold">PNS Pensiun</h2>
-                <table class="w-full text-sm">
+                <table class="w-full text-sm  mb-4">
                     <thead>
                         <tr class="border-b">
                             <th class="p-2">NIP</th>
@@ -84,7 +84,7 @@
             {{-- Non PNS Tetap --}}
             <x-filament::card>
                 <h2 class="text-lg font-bold">Non PNS Tenaga Tetap</h2>
-                <table class="w-full text-sm">
+                <table class="w-full text-sm mb-4">
                     <thead>
                         <tr class="border-b">
                             <th class="p-2">NIP</th>
@@ -116,7 +116,7 @@
             {{-- Non PNS Kontrak --}}
             <x-filament::card>
                 <h2 class="text-lg font-bold">Non PNS Tenaga Kontrak</h2>
-                <table class="w-full text-sm">
+                <table class="w-full text-sm mb-4">
                     <thead>
                         <tr class="border-b">
                             <th class="p-2">NIP</th>
