@@ -5,10 +5,8 @@ namespace App\Filament\Pages;
 use Filament\Pages\Page;
 use Filament\Tables;
 use Filament\Tables\Table;
-use App\Models\LayananBerkas; // sesuaikan dengan nama modelmu
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\LayananBerkas;
 use Illuminate\Support\Carbon;
-use Carbon\Carbon as CarbonCarbon;
 
 class RiwayatLayananArsip extends Page implements Tables\Contracts\HasTable
 {
@@ -22,7 +20,8 @@ class RiwayatLayananArsip extends Page implements Tables\Contracts\HasTable
     {
         return $table
             ->query(
-                LayananBerkas::query()->latest('Tanggal')
+                // ✅ Urut berdasarkan kolom 'No' dari paling kecil ke paling besar
+                LayananBerkas::query()->orderBy('No', 'asc')
             )
             ->columns([
 
@@ -67,13 +66,27 @@ class RiwayatLayananArsip extends Page implements Tables\Contracts\HasTable
 
                 Tables\Columns\TextColumn::make('Tanggal')
                     ->label('Tanggal')
-                    ->formatStateUsing(fn($state) => $state ? Carbon::createFromFormat('d/m/Y', $state)->format('d-m-Y') : null),
+                    ->formatStateUsing(function ($state) {
+                        try {
+                            return Carbon::createFromFormat('d/m/Y', $state)->format('d-m-Y');
+                        } catch (\Exception $e) {
+                            return $state;
+                        }
+                    })
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('Kembali')
                     ->label('Kembali')
-                    ->formatStateUsing(fn($state) => $state ? Carbon::createFromFormat('d/m/Y', $state)->format('d-m-Y') : null),
+                    ->formatStateUsing(function ($state) {
+                        try {
+                            return Carbon::createFromFormat('d/m/Y', $state)->format('d-m-Y');
+                        } catch (\Exception $e) {
+                            return $state;
+                        }
+                    }),
             ])
-            ->defaultSort('Tanggal', 'desc')
+            // ✅ Default sort berdasarkan No (paling lama ke terbaru)
+            ->defaultSort('No', 'asc')
             ->filters([
                 Tables\Filters\SelectFilter::make('TAHUN')
                     ->options(

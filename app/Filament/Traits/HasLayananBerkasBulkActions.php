@@ -5,6 +5,7 @@ namespace App\Filament\Traits;
 use Filament\Tables;
 use Filament\Forms;
 use App\Models\LayananBerkas;
+use Illuminate\Support\Facades\DB;
 
 trait HasLayananBerkasBulkActions
 {
@@ -73,45 +74,69 @@ trait HasLayananBerkasBulkActions
                     ->label('Seksi'),
             ])
             ->action(function (array $data, $records) {
+
+                // Ambil ID terakhir di tabel database
+                $lastId = DB::connection('old')
+                    ->table('tbpinjamberkaspns')
+                    ->max('ID') ?? 0;
+
                 foreach ($records as $record) {
+                    $lastId++; // ID berikutnya
+
                     LayananBerkas::create([
+                        'ID'           => $lastId,                  // lanjut dari ID terakhir
                         'KodeBerkas'   => $record->NOMORBERKAS ?? $record->KODEBERKAS ?? null,
                         'Layanan'      => static::getStatusPeminjam(),
                         'StatusBerkas' => 'dipinjam',
-                        'SifatLayan'   => $data['SifatLayan'] ?? null,
-                        'SifatLain'    => $data['SifatLain'] ?? null,
-                        'BerkasLayan'  => $data['BerkasLayan'] ?? null,
-                        'BerkasLain'   => $data['BerkasLain'] ?? null,
-                        'Pengguna'     => $data['Layanan'] ?? null, // iya/tidak internal SDM
-                        'Nama'         => $data['Nama'] ?? null,
-                        'UnitKerja'    => $data['UnitKerja'] ?? null,
-                        'Subdit'       => $data['Subdit'] ?? null,
-                        'Seksi'        => $data['Seksi'] ?? null,
-                        'Tanggal'      => now()->format('Y-m-d'),
+                        'keluar'       => 'PERSONAL',               // tambahan kolom keluar
+                        'SifatLayan'   => $data['SifatLayan'] ?? '',
+                        'SifatLain'    => $data['SifatLain'] ?? '',
+                        'BerkasLayan'  => $data['BerkasLayan'] ?? '',
+                        'BerkasLain'   => $data['BerkasLain'] ?? '',
+                        'Pengguna'     => $data['Layanan'] ?? '',   // iya/tidak internal SDM
+                        'Nama'         => $data['Nama'] ?? '',
+                        'UnitKerja'    => $data['UnitKerja'] ?? '',
+                        'Subdit'       => $data['Subdit'] ?? '',
+                        'Seksi'        => $data['Seksi'] ?? '',
+                        'Tanggal'      => now()->format('d/m/Y'),
+                        'BULAN'        => now()->month,
+                        'TAHUN'        => now()->year,
                     ]);
                 }
             })
             ->deselectRecordsAfterCompletion();
     }
 
-    protected function getSelesaiBulkAction(): Tables\Actions\BulkAction
-    {
-        return Tables\Actions\BulkAction::make('selesai')
-            ->label('Selesai Meminjam')
-            ->action(function ($records) {
-                foreach ($records as $record) {
-                    LayananBerkas::where('KodeBerkas', $record->NOMORBERKAS)
-                        ->where('StatusBerkas', 'dipinjam')
-                        ->latest('Tanggal')
-                        ->first()?->update([
-                            'StatusBerkas' => 'dikembalikan',
-                            'kembali'      => now()->format('Y-m-d'),
-                        ]);
+   protected function getSelesaiBulkAction(): Tables\Actions\BulkAction
+{
+    return Tables\Actions\BulkAction::make('selesai')
+        ->label('Selesai Meminjam')
+        ->action(function ($records) {
+            foreach ($records as $record) {
+                // Ambil kode berkas dari field yang tersedia
+                $kode = $record->NOMORBERKAS ?? $record->KODEBERKAS ?? null;
+
+                if (!$kode) {
+                    continue; // kalau kosong, lewati
                 }
-            })
-            ->requiresConfirmation()
-            ->color('success');
-    }
+
+                // Ambil data terakhir yang masih "dipinjam"
+                $lastPinjam = LayananBerkas::where('KodeBerkas', $kode)
+                    ->where('StatusBerkas', 'dipinjam')
+                    ->orderByRaw("STR_TO_DATE(Tanggal, '%d/%m/%Y') DESC")
+                    ->first();
+
+                if ($lastPinjam) {
+                    $lastPinjam->update([
+                        'StatusBerkas' => 'dikembalikan',
+                        'kembali'      => now()->format('d/m/Y'),
+                    ]);
+                }
+            }
+        })
+        ->requiresConfirmation()
+        ->color('success');
+}
 
     protected function getLayananBulkActions(): array
     {

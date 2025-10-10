@@ -8,13 +8,14 @@
     "require": {
         "php": "^8.2",
         "barryvdh/laravel-dompdf": "^3.1",
+        "bezhansalleh/filament-shield": "^3.9",
         "filament/filament": "^3.2",
+        "filament/forms": "^3.2",
+        "filament/tables": "^3.2",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.0",
-        "filament/forms": "^3.2",
-        "filament/tables": "^3.2"
-        
+        "spatie/laravel-permission": "^6.21"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.6",

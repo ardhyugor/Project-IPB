@@ -25,7 +25,12 @@ class LayananBerkas extends Model
     'UnitKerja',
     'Subdit',
     'Seksi',
+    'keluar',
+    'BULAN',
+    'TAHUN',
+    'ID',
     'Tanggal',
     'kembali',
+    'Operator',
     ];
 }
