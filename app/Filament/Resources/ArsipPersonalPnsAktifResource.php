@@ -13,7 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Traits\HasLayananBerkasBulkActions;
-
+use Illuminate\Support\Facades\Gate;
 
 class ArsipPersonalPnsAktifResource extends Resource
 {
@@ -23,6 +23,7 @@ class ArsipPersonalPnsAktifResource extends Resource
     protected static string $statusPeminjam = 'PNS';
     protected static ?string $model = ArsipPersonalPnsAktif::class;
     protected static ?string $navigationGroup = 'Layanan Arsip » Arsip Personal';
+    // protected static ?string $navigationParentItem = 'Layanan Arsip » Arsip Non Personal';
     protected static ?string $navigationLabel = 'PNS/CPNS Aktif';
 
     public static function form(Form $form): Form
@@ -97,6 +98,12 @@ class ArsipPersonalPnsAktifResource extends Resource
             //
         ];
     }
+
+    // public static function canViewAny(): bool
+    // {
+    //     return Gate::allows('view-arsip');
+    // }
+    // YANG DIATAS BUAT NGE GATE IN SI ROLE NYA
 
     public static function getPages(): array
     {

@@ -7,6 +7,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use App\Models\LayananBerkas;
 use Illuminate\Support\Carbon;
+use Filament\Tables\Actions\Action;
 
 class RiwayatLayananArsip extends Page implements Tables\Contracts\HasTable
 {
@@ -20,11 +21,9 @@ class RiwayatLayananArsip extends Page implements Tables\Contracts\HasTable
     {
         return $table
             ->query(
-                // ✅ Urut berdasarkan kolom 'No' dari paling kecil ke paling besar
                 LayananBerkas::query()->orderBy('No', 'asc')
             )
             ->columns([
-
                 Tables\Columns\TextColumn::make('BULAN')
                     ->label('Bln/Thn')
                     ->formatStateUsing(fn($state, $record) => sprintf('%02d/%s', $record->BULAN, $record->TAHUN))
@@ -85,7 +84,6 @@ class RiwayatLayananArsip extends Page implements Tables\Contracts\HasTable
                         }
                     }),
             ])
-            // ✅ Default sort berdasarkan No (paling lama ke terbaru)
             ->defaultSort('No', 'asc')
             ->filters([
                 Tables\Filters\SelectFilter::make('TAHUN')
@@ -110,6 +108,14 @@ class RiwayatLayananArsip extends Page implements Tables\Contracts\HasTable
                         12 => 'Desember',
                     ])
                     ->label('Bulan'),
+            ])
+            ->headerActions([
+                // 🔘 Tombol Rekapitulasi di pojok kiri atas tabel
+                Action::make('rekapitulasi')
+                    ->label('📊 Rekapitulasi')
+                    ->color('info')
+                    ->icon('heroicon-o-chart-pie')
+                    ->action(fn() => $this->dispatch('openRekapModal'))
             ]);
     }
 }
