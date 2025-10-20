@@ -36,6 +36,66 @@ class ArsipPersonalNonPnsKontrakResource extends Resource
                     ->label('Nama')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\DatePicker::make('TANGGALLAHIR')
+                    ->label('Tanggal Lahir')
+                    ->required()
+                    ->format('Y-m-d'), // simpan sebagai string "2025-10-20"
+                Forms\Components\DatePicker::make('TANGGALANGKAT')
+                    ->label('TMT')
+                    ->required()
+                    ->format('Y'), // misal cuma tahun, tetap string
+                Forms\Components\Select::make('UNIT')
+                    ->label('Unit Kerja')
+                    ->required()
+                    ->options([
+                        'IPB' => 'IPB',
+                        'Biro Komunikasi' => 'Biro Komunikasi',
+                        'Biro Legislasi Dan Pelayanan Hukum' => 'Biro Legislasi Dan Pelayanan Hukum',
+                        'Biro Umum dan Instalasi' => 'Biro Umum dan Instalasi',
+                        'Direktorat Administrasi Pendidikan Dan Penerimaan Mahasiswa Baru' => 'Direktorat Administrasi Pendidikan Dan Penerimaan Mahasiswa Baru',
+                        'Direktorat Bisnis Dan Manajemen Aset Komersial' => 'Direktorat Bisnis Dan Manajemen Aset Komersial',
+                        'Direktorat Inovasi Dan Kewirausahaan' => 'Direktorat Inovasi Dan Kewirausahaan',
+                        'Direktorat Kemahasiswaan Dan Pengembangan Karir' => 'Direktorat Kemahasiswaan Dan Pengembangan Karir',
+                        'Direktorat Kerjasama Dan Hubungan Alumni' => 'Direktorat Kerjasama Dan Hubungan Alumni',
+                        'Direktorat Keuangan Dan Akuntansi' => 'Direktorat Keuangan Dan Akuntansi',
+                        'Direktorat Pengembangan Program Dan Teknologi Pendidikan' => 'Direktorat Pengembangan Program Dan Teknologi Pendidikan',
+                        'Direktorat Perencanaan, Pemonitoran, Dan Evaluasi' => 'Direktorat Perencanaan, Pemonitoran, Dan Evaluasi',
+                        'Direktorat Program Internasional' => 'Direktorat Program Internasional',
+                        'Direktorat Sistem Informasi Dan Transformasi Digital' => 'Direktorat Sistem Informasi Dan Transformasi Digital',
+                        'Direktorat Sumberdaya Manusia' => 'Direktorat Sumberdaya Manusia',
+                        'Kantor Manajemen Mutu Dan Audit Internal' => 'Kantor Manajemen Mutu Dan Audit Internal',
+                        'Lembaga Pengembangan Institut' => 'Lembaga Pengembangan Institut',
+                        'Lembaga Penelitian & Pengabdian Kepada Masyarakat' => 'Lembaga Penelitian & Pengabdian Kepada Masyarakat',
+                        'Fakultas Pertanian' => 'Fakultas Pertanian',
+                        'Sekolah Kedokteran Hewan dan Biomedis' => 'Sekolah Kedokteran Hewan dan Biomedis',
+                        'Fakultas Perikanan Dan Ilmu Kelautan' => 'Fakultas Perikanan Dan Ilmu Kelautan',
+                        'Fakultas Peternakan' => 'Fakultas Peternakan',
+                        'Fakultas Kehutanan dan Lingkungan' => 'Fakultas Kehutanan dan Lingkungan',
+                        'Fakultas Teknologi Pertanian' => 'Fakultas Teknologi Pertanian',
+                        'Fakultas Matematika Dan Ilmu Pengetahuan Alam' => 'Fakultas Matematika Dan Ilmu Pengetahuan Alam',
+                        'Fakultas Ekonomi dan Manajemen' => 'Fakultas Ekonomi dan Manajemen',
+                        'Fakultas Ekologi Manusia' => 'Fakultas Ekologi Manusia',
+                        'Fakultas Kedokteran' => 'Fakultas Kedokteran',
+                        'Sekolah Pascasarjana' => 'Sekolah Pascasarjana',
+                        'Sekolah Bisnis' => 'Sekolah Bisnis',
+                        'Sekolah Vokasi' => 'Sekolah Vokasi',
+                        'Program Pendidikan Kompetensi Umum' => 'Program Pendidikan Kompetensi Umum',
+                        'Program Pendidikan Di Luar Kampus Utama' => 'Program Pendidikan Di Luar Kampus Utama',
+                        'Unit Laboratorium Terpadu' => 'Unit Laboratorium Terpadu',
+                        'Perpustakaan' => 'Perpustakaan',
+                        'Unit Laboratorium Riset Unggulan' => 'Unit Laboratorium Riset Unggulan',
+                        'Unit Arsip' => 'Unit Arsip',
+                        'Unit Keamanan Kampus' => 'Unit Keamanan Kampus',
+                        'Unit Kesehatan' => 'Unit Kesehatan',
+                        'Unit Layanan Pengadaan' => 'Unit Layanan Pengadaan',
+                        'Unit Olah Raga Dan Seni' => 'Unit Olah Raga Dan Seni',
+                        'Unit Pelatihan Bahasa' => 'Unit Pelatihan Bahasa',
+                        'Unit Science And Techno Park' => 'Unit Science And Techno Park',
+                        'Unit Transportasi Kampus' => 'Unit Transportasi Kampus',
+                        'Green Tv' => 'Green Tv',
+                    ])
+                    ->searchable()
+                    ->native(false),
                 Forms\Components\TextInput::make('LEMARI')
                     ->label('Lemari')
                     ->required()
@@ -46,8 +106,17 @@ class ArsipPersonalNonPnsKontrakResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('KODEBERKAS')
                     ->label('Kode Berkas')
-                    ->required()
-                    ->maxLength(255),
+                    ->disabled()
+                    ->dehydrated(true)
+                    ->default(function () {
+                        $lastNumber = ArsipPersonalNonPnsKontrak::max('KODEBERKAS');
+                        $lastInt = 0;
+                        if ($lastNumber && is_string($lastNumber)) {
+                            $lastInt = intval(preg_replace('/\D/', '', $lastNumber));
+                        }
+                        $nextNumber = $lastInt + 1;
+                        return str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+                    }),
             ]);
     }
 
@@ -97,14 +166,14 @@ class ArsipPersonalNonPnsKontrakResource extends Resource
                             return str_contains(strtolower($folder), strtolower($keyword));
                         });
 
-                        
+
                         if (!$matchedFolder) {
                             return new \Illuminate\Support\HtmlString('<p class="text-gray-500">Tidak ditemukan folder untuk NIP/Nama ini.</p>');
                         }
-                        
+
                         $files = Storage::disk('public')->files($matchedFolder);
                         // dd($files);
-                        
+
                         if (empty($files)) {
                             return new \Illuminate\Support\HtmlString('<p class="text-gray-500">Folder ditemukan, tapi tidak ada file di dalamnya.</p>');
                         }

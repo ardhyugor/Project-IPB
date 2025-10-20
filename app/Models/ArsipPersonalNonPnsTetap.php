@@ -14,6 +14,9 @@ class ArsipPersonalNonPnsTetap extends Model
     protected $fillable = [
         'NIP',
         'NAMA',
+        'TANGGALLAHIR',
+        'TANGGALANGKAT',
+        'UNIT',
         'LEMARI',
         'LACI',
         'KODEBERKAS',

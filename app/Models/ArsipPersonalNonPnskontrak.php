@@ -14,6 +14,10 @@ class ArsipPersonalNonPnskontrak extends Model
     protected $fillable = [
         'NIP',
         'NAMA',
+        'TANGGALLAHIR',
+        'JENISKELAMIN',
+        'TANGGALANGKAT',
+        'UNIT',
         'LEMARI',
         'LACI',
         'KODEBERKAS',

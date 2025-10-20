@@ -85,7 +85,7 @@ trait HasLayananBerkasBulkActions
 
                     LayananBerkas::create([
                         'ID'           => $lastId,                  // lanjut dari ID terakhir
-                        'KodeBerkas'   => $record->NOMORBERKAS ?? $record->KODEBERKAS ?? null,
+                        'KodeBerkas'   => $record->NOMORBERKAS ?? $record->KODEBERKAS ?? $record->NomorBuku ?? null,
                         'Layanan'      => static::getStatusPeminjam(),
                         'StatusBerkas' => 'dipinjam',
                         'keluar'       => 'PERSONAL',               // tambahan kolom keluar
@@ -114,7 +114,7 @@ trait HasLayananBerkasBulkActions
         ->action(function ($records) {
             foreach ($records as $record) {
                 // Ambil kode berkas dari field yang tersedia
-                $kode = $record->NOMORBERKAS ?? $record->KODEBERKAS ?? null;
+                $kode = $record->NOMORBERKAS ?? $record->KODEBERKAS ?? $record->NomorBuku ?? null ;
 
                 if (!$kode) {
                     continue; // kalau kosong, lewati

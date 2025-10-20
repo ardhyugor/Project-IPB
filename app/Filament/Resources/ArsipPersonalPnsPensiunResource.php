@@ -24,6 +24,11 @@ class ArsipPersonalPnsPensiunResource extends Resource
     protected static string $statusPeminjam = 'Pensiun';
     
 
+    // public static function canViewAny(): bool
+    // {
+    //     return auth()->user()->role->name === 'admin';
+    // }
+
     public static function form(Form $form): Form
     {
         return $form
