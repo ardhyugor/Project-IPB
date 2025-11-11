@@ -74,7 +74,7 @@ class RiwayatLayananArsip extends Page implements Tables\Contracts\HasTable
                     })
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('Kembali')
+                Tables\Columns\TextColumn::make('StatusBerkas')
                     ->label('Kembali')
                     ->formatStateUsing(function ($state) {
                         try {

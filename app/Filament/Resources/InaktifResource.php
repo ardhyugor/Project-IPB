@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Traits\HasLayananBerkasBulkActions;
+use Filament\Tables\Actions\DeleteAction;
 
 class InaktifResource extends Resource
 {
@@ -97,6 +98,7 @@ class InaktifResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                DeleteAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make(

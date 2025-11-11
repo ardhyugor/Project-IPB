@@ -40,7 +40,7 @@ class ArsipPersonalNonPnsTetapResource extends Resource
                     ->required()
                     ->format('d/m/Y')
                     ->displayFormat('d/m/Y')
-                    ->native(false),
+                    ->native(false), 
                 Forms\Components\DatePicker::make('TANGGALANGKAT')
                     ->label('TMT Diangkat')
                     ->required()

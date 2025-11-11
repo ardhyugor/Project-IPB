@@ -15,7 +15,7 @@ class ArsipSearch extends Page
 
     protected static ?string $navigationIcon = 'heroicon-o-magnifying-glass';
     protected static string $view = 'filament.pages.arsip-search';
-    protected static ?string $title = 'Pencarian Arsip';
+    protected static ?string $title = 'Pencarian Arsip';          
 
     public string $search = '';
 

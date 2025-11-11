@@ -136,11 +136,6 @@ class AgendaResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-                Tables\Actions\Action::make('cetak')
-                    ->label('Cetak PDF')
-                    ->icon('heroicon-o-printer')
-                    ->url(fn($record) => route('agenda.cetak', ['id' => $record->getKey()]))
-                    ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

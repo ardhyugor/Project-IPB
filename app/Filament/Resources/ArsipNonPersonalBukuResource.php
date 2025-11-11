@@ -69,9 +69,10 @@ class ArsipNonPersonalBukuResource extends Resource
                     ->searchable(),
             ])->filters([
                 //
-            ])->headerActions([
-                Tables\Actions\CreateAction::make(),
             ])
+            // ->headerActions([
+            //     Tables\Actions\CreateAction::make(),
+            // ])
             ->filters([
                 //
             ])

@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Traits\HasLayananBerkasBulkActions;
+use Illuminate\Support\Facades\Auth;
 
 class ArsipPersonalPnsPensiunResource extends Resource
 {
@@ -26,7 +27,7 @@ class ArsipPersonalPnsPensiunResource extends Resource
 
     // public static function canViewAny(): bool
     // {
-    //     return auth()->user()->role->name === 'admin';
+    //     return Auth::user()->role->name === 'admin';
     // }
 
     public static function form(Form $form): Form
@@ -41,18 +42,35 @@ class ArsipPersonalPnsPensiunResource extends Resource
                     ->label('Nama')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\DatePicker::make('TANGGALLAHIR')
+                    ->label('Tanggal Lahir')
+                    ->required()
+                    ->format('Y-m-d'), // simpan sebagai string "2025-10-20"
+                Forms\Components\DatePicker::make('TANGGALPENSIUN')
+                    ->label('Tanggal Pensiun')
+                    ->required()
+                    ->format('Y-m-d'), // simpan sebagai string "2025-10-20"
                 Forms\Components\TextInput::make('LEMARI')
                     ->label('Lemari')
-                    ->required()
+                    ->nullable()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('LACI')
                     ->label('Laci')
-                    ->required()
+                    ->nullable()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('KODEBERKAS')
                     ->label('Kode Berkas')
-                    ->required()
-                    ->maxLength(255),
+                    ->disabled()
+                    ->dehydrated(true)
+                    ->default(function () {
+                        $lastNumber = ArsipPersonalPnsPensiun::max('KODEBERKAS');
+                        $lastInt = 0;
+                        if ($lastNumber && is_string($lastNumber)) {
+                            $lastInt = intval(preg_replace('/\D/', '', $lastNumber));
+                        }
+                        $nextNumber = $lastInt + 1;
+                        return str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+                    }),
             ]);
     }
 
@@ -66,6 +84,14 @@ class ArsipPersonalPnsPensiunResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('NAMA')
                     ->label('Nama')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('TANGGALLAHIR')
+                    ->label('Tanggal Lahir')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('TANGGALPENSIUN')
+                    ->label('Tanggal Pensiun')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('LEMARI')

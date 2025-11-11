@@ -14,6 +14,8 @@ class ArsipPersonalPnsPensiun extends Model
     protected $fillable = [
         'NIP',
         'NAMA',
+        'TANGGALLAHIR',
+        'TANGGALPENSIUN',
         'LEMARI',
         'LACI',
         'KODEBERKAS',
