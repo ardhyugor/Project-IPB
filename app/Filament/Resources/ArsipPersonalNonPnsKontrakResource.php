@@ -110,12 +110,12 @@ class ArsipPersonalNonPnsKontrakResource extends Resource
                     ->dehydrated(true)
                     ->default(function () {
                         $lastNumber = ArsipPersonalNonPnsKontrak::max('KODEBERKAS');
-                        $lastInt = 0;
-                        if ($lastNumber && is_string($lastNumber)) {
-                            $lastInt = intval(preg_replace('/\D/', '', $lastNumber));
-                        }
-                        $nextNumber = $lastInt + 1;
-                        return str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+                            $lastInt = 0;
+                            if ($lastNumber && is_string($lastNumber)) {
+                                $lastInt = intval(preg_replace('/\D/', '', $lastNumber));
+                            }
+                            $nextNumber = $lastInt + 1;
+                            return str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
                     }),
             ]);
     }

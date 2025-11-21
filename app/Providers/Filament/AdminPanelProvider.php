@@ -46,7 +46,7 @@ class AdminPanelProvider extends PanelProvider
                
                 
                 BlogPostsChart::class, // Widget Chart
-                \App\Filament\Widgets\AgendaBerkasPerBulanChart::class,
+                \App\Filament\Widgets\AgendaBerkasPerBulan::class,
             ])
             ->middleware([
                 EncryptCookies::class,
