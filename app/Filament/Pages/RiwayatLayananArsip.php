@@ -8,6 +8,7 @@ use Filament\Tables\Table;
 use App\Models\LayananBerkas;
 use Illuminate\Support\Carbon;
 use Filament\Tables\Actions\Action;
+use Illuminate\Support\Facades\Auth;
 
 class RiwayatLayananArsip extends Page implements Tables\Contracts\HasTable
 {
@@ -16,6 +17,12 @@ class RiwayatLayananArsip extends Page implements Tables\Contracts\HasTable
     protected static ?string $navigationIcon = 'heroicon-o-archive-box';
     protected static ?string $navigationLabel = 'Riwayat Layanan Arsip';
     protected static string $view = 'filament.pages.riwayat-layanan-arsip';
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return in_array(Auth::user()->role->name, ['admin', 'staff']);
+    }
+
 
     public function table(Table $table): Table
     {

@@ -10,6 +10,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Notifications\Notification;
 use Filament\Forms;
+use Illuminate\Support\Facades\Auth;
 
 class EditArsipPersonalPnsPensiun extends EditRecord
 {
@@ -19,6 +20,7 @@ class EditArsipPersonalPnsPensiun extends EditRecord
     {
         return [
             Actions\Action::make('mutasi')
+            // ->visible(fn () => Auth::user()->role->name === 'admin')
                 ->label('Mutasi Data')
                 ->icon('heroicon-o-arrows-right-left')
                 ->color('success')

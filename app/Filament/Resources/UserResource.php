@@ -11,6 +11,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
@@ -18,6 +19,11 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationGroup = 'Manajemen Pengguna';
+
+    public static function canViewAny(): bool
+    {
+        return in_array(Auth::user()->role->name, ['admin', 'staff']);
+    }
 
     // 🧩 FORM: CREATE & EDIT USER
     public static function form(Form $form): Form

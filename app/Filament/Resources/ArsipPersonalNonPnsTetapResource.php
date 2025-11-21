@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Traits\HasLayananBerkasBulkActions;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ArsipPersonalNonPnsTetapResource extends Resource
@@ -22,6 +23,31 @@ class ArsipPersonalNonPnsTetapResource extends Resource
     protected static ?string $navigationLabel = 'Non PNS Tetap';
     use HasLayananBerkasBulkActions;
     protected static string $statusPeminjam = 'Non PNS Tetap';
+
+    public static function canViewAny(): bool
+    {
+        return true; // semua boleh lihat
+    }
+
+    public static function canCreate(): bool
+    {
+        return Auth::user()->role->name === 'admin';
+    }
+
+    public static function canDelete($record): bool
+    {
+        return Auth::user()->role->name === 'admin';
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return Auth::user()->role->name === 'admin';
+    }
+
+    public static function canEdit($record): bool
+    {
+        return in_array(Auth::user()->role->name, ['admin', 'staff']);
+    }
 
     public static function form(Form $form): Form
     {
@@ -40,7 +66,7 @@ class ArsipPersonalNonPnsTetapResource extends Resource
                     ->required()
                     ->format('d/m/Y')
                     ->displayFormat('d/m/Y')
-                    ->native(false), 
+                    ->native(false),
                 Forms\Components\DatePicker::make('TANGGALANGKAT')
                     ->label('TMT Diangkat')
                     ->required()
@@ -191,7 +217,7 @@ class ArsipPersonalNonPnsTetapResource extends Resource
                     })
                     ->color('success'),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\deleteAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make(

@@ -28,13 +28,16 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->brandName('Layanan Arsip IPB')        
+            ->brandName('Layanan Arsip IPB')
             ->profile(isSimple: false)
             ->login()
             ->spa()
             ->sidebarCollapsibleOnDesktop()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => '#0D8AF5',
+                'secondary' => '#6B7280',
+                'danger' => '#DC2626',
+                'success' => '#16A34A',
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -43,8 +46,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-               
-                
+
+
                 BlogPostsChart::class, // Widget Chart
                 \App\Filament\Widgets\AgendaBerkasPerBulan::class,
             ])

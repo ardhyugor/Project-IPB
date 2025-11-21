@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class AgendaResource extends Resource
 {
@@ -16,6 +17,11 @@ class AgendaResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationLabel = 'Agenda Arsip';
+
+    public static function canViewAny(): bool
+    {
+        return in_array(Auth::user()->role->name, ['admin', 'staff']);
+    }
 
     public static function form(Form $form): Form
     {
