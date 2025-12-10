@@ -4,7 +4,7 @@
 <body class="bg-gray-50">
 
 <section id="panduan" class="bg-white min-h-screen flex items-center">
-  <div class="w-full py-12 sm:py-16">
+  <div class="w-full py-12 sm:py-10">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
         

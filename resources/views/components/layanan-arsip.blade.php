@@ -59,14 +59,96 @@
 <body class="bg-white min-h-screen">
 
 <!-- Navigation -->
-<nav class=" bg-[#003A70]/80 backdrop-blur-sm border-b sticky top-0 z-50">
+<nav class=" bg-blue-900/80 backdrop-blur-sm border-b sticky top-0 z-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
       <div class="flex items-center gap-2">
         <img src="img/logos.png" class="h-10 w-10">
-        <h1 class="text-xl font-bold text-white">Layanan Arsip Lengkap</h1>
+          <h1 class="text-xl font-bold text-white">ARSIPINAJA</h1>
+        </div>
+      <div class="flex items-center gap-6">
+        <!-- Dropdown Tentang -->
+        <div class="relative group">
+          <button class="text-white hover:text-gray-300 font-medium transition flex items-center gap-1">
+            Tentang
+            <svg class="w-4 h-4 group-hover:rotate-180 transition-transform duration-200" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </button>
+
+          <!-- Dropdown Menu -->
+          <div class="absolute left-0 mt-0 w-80 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-3 top-full">
+
+            <!-- OVERVIEW Section -->
+            <div class="px-4 py-2">
+              <a href="infografis"
+                  class="flex items-start gap-3 px-3 py-2 text-gray-800 hover:bg-blue-50 rounded transition mb-2">
+                <div class="flex-shrink-0 mt-1">
+                  <i class="fas fa-chart-bar text-blue-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-sm text-gray-900">Infografis</h4>
+                  <p class="text-xs text-gray-600">Statistik dan data visual</p>
+                </div>
+              </a>
+
+              <a href="layanan-arsip"
+                  class="flex items-start gap-3 px-3 py-2 text-gray-800 hover:bg-blue-50 rounded transition mb-2">
+                <div class="flex-shrink-0 mt-1">
+                  <i class="fas fa-briefcase text-blue-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-sm text-gray-900">Layanan</h4>
+                  <p class="text-xs text-gray-600">Daftar layanan kami</p>
+                </div>
+              </a>
+
+              <a href="unit-kerja"
+                  class="flex items-start gap-3 px-3 py-2 text-gray-800 hover:bg-blue-50 rounded transition">
+                <div class="flex-shrink-0 mt-1">
+                  <i class="fas fa-building text-blue-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-sm text-gray-900">Unit Kerja</h4>
+                  <p class="text-xs text-gray-600">Struktur organisasi kami</p>
+                </div>
+              </a>
+            </div>
+
+            <!-- Divider -->
+            <div class="border-t my-2"></div>
+
+            <!-- PRIVACY Section -->
+            <div class="px-4 py-2">
+              <a href="kebijakan"
+                  class="flex items-start gap-3 px-3 py-2 text-gray-800 hover:bg-blue-50 rounded transition mb-2">
+                <div class="flex-shrink-0 mt-1">
+                  <i class="fas fa-shield-alt text-blue-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-sm text-gray-900">Kebijakan Privasi</h4>
+                  <p class="text-xs text-gray-600">Perlindungan data Anda</p>
+                </div>
+              </a>
+
+              <a href="ketentuan-pengguna"
+                  class="flex items-start gap-3 px-3 py-2 text-gray-800 hover:bg-blue-50 rounded transition">
+                <div class="flex-shrink-0 mt-1">
+                  <i class="fas fa-file-contract text-blue-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-sm text-gray-900">Ketentuan Pengguna</h4>
+                  <p class="text-xs text-gray-600">Syarat & kondisi layanan</p>
+                </div>
+              </a>
+            </div>
+
+          </div>
+        </div>
+        <a href="/" class="text-slate-300 hover:text-white transition">← Kembali</a>
       </div>
-      <a href="/" class="text-slate-300 hover:text-white transition">← Kembali</a>
     </div>
   </div>
 </nav>

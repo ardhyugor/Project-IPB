@@ -2,18 +2,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
 
-<section id="layanan" class="w-full">
+<section id="layanan" class="relative z-10 min-h-screen bg-white py-20">
   <div class="bg-white w-full">
-  <div class="w-full px-4 py-10 sm:px-6 sm:py-10 lg:px-8">
+  <div class="w-full px-4 py-10 sm:px-6 sm:py-5 lg:px-8">
       <div class="grid grid-cols-1 items-start gap-x-12 gap-y-16 lg:grid-cols-12">
-        
         <!-- Left Content - Specifications -->
         <div class="lg:col-span-5">
           <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl scroll-fade-in opacity-0">
             Spesifikasi Teknis Layanan Arsip
           </h2>
           <p class="mt-4 text-gray-500 text-sm sm:text-base scroll-fade-in opacity-0" style="animation-delay: 0.1s;">
-            Layanan arsip profesional dengan standar ANRI menyediakan solusi lengkap untuk penyimpanan, penataan, digitalisasi, dan temu kembali informasi arsip. Sistem keamanan berlapis, pengelolaan rapi, dan dikelola oleh arsiparis bersertifikat ANRI memastikan integritas dan aksesibilitas dokumen Anda.
+            Layanan arsip profesional dengan standar ANRI menyediakan solusi lengkap untuk penyimpanan, penataan, digitalisasi,
+            dan temu kembali informasi arsip. Sistem keamanan berlapis, pengelolaan rapi, dan dikelola oleh arsiparis bersertifikat ANRI memastikan integritas dan aksesibilitas dokumen Anda.
           </p>
           
           <dl class="mt-8 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">

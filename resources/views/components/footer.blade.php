@@ -164,7 +164,7 @@
                            class="social-icon w-12 h-12 bg-white bg-opacity-20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-amber-400 hover:text-slate-800">
                             <i class="fab fa-youtube text-lg"></i>
                         </a>
-                        <a href="https://www.instagram.com/sdmipbofficial" target="_blank" 
+                        <a href="https://www.instagram.com/arsip.office/" target="_blank" 
                            class="social-icon w-12 h-12 bg-white bg-opacity-20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-amber-400 hover:text-slate-800">
                             <i class="fab fa-instagram text-lg"></i>
                         </a>
