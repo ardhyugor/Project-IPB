@@ -69,31 +69,27 @@ class AgendaResource extends Resource
                 Forms\Components\TextInput::make('BULAN')
                     ->label('Bulan')
                     ->required()
-                    ->default(now()->format('F'))
-                    ->maxLength(255)
+                    ->default(now()->format('n'))
                     ->disabled(),
 
                 Forms\Components\TextInput::make('TAHUN')
                     ->label('Tahun')
                     ->required()
                     ->default(now()->format('Y'))
-                    ->maxLength(4)
                     ->disabled(),
             ]);
     }
 
-    // Helper untuk format tanggal aman
     private static function safeDateFormat($state, $outputFormat = 'd M Y')
     {
-        $formats = ['Y-m-d', 'd/m/Y']; // urutkan dari format MySQL ke format lama
+        $formats = ['Y-m-d', 'd/m/Y'];
         foreach ($formats as $format) {
             try {
                 return \Carbon\Carbon::createFromFormat($format, $state)->format($outputFormat);
             } catch (\Exception $e) {
-                // lanjut coba format lain
             }
         }
-        return $state; // kalau gagal semua, tampilkan apa adanya
+        return $state;
     }
 
     public static function table(Table $table): Table
@@ -133,12 +129,74 @@ class AgendaResource extends Resource
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('BULAN')
-                    ->label('Bulan'),
+                    ->label('Bulan')
+                    ->formatStateUsing(function ($state) {
+                        $bulan = (int) $state;
+                        $nama = [
+                            1 => 'January',
+                            2 => 'February',
+                            3 => 'March',
+                            4 => 'April',
+                            5 => 'May',
+                            6 => 'June',
+                            7 => 'July',
+                            8 => 'August',
+                            9 => 'September',
+                            10 => 'October',
+                            11 => 'November',
+                            12 => 'December'
+                        ];
+                        return $nama[$bulan] ?? $state;
+                    }),
 
                 Tables\Columns\TextColumn::make('TAHUN')
-                    ->label('Tahun'),
+                    ->label('Tahun')
+                    ->sortable(),
             ])
-            ->filters([])
+
+->filters([
+    Tables\Filters\SelectFilter::make('TAHUN')
+        ->label('Filter Tahun')
+        ->options(function () {
+            return Agenda::query()
+                ->select('TAHUN')
+                ->whereNotNull('TAHUN')   // ⬅ fix: pastikan tidak NULL
+                ->distinct()              // ⬅ fix: hindari duplikat data
+                ->orderBy('TAHUN', 'desc')
+                ->pluck('TAHUN', 'TAHUN')
+                ->toArray();
+        })
+        ->query(function ($query, $data) {
+            if (!empty($data['value'])) {
+                $query->where('TAHUN', intval($data['value']));
+            }
+        }),
+
+    Tables\Filters\SelectFilter::make('BULAN')
+        ->label('Filter Bulan')
+        ->options([
+            '1' => 'January',
+            '2' => 'February',
+            '3' => 'March',
+            '4' => 'April',
+            '5' => 'May',
+            '6' => 'June',
+            '7' => 'July',
+            '8' => 'August',
+            '9' => 'September',
+            '10' => 'October',
+            '11' => 'November',
+            '12' => 'December',
+        ])
+        ->query(function ($query, $data) {
+            if (!empty($data['value'])) {
+                $query->where('BULAN', intval($data['value']));
+            }
+        }),
+])
+
+
+
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),

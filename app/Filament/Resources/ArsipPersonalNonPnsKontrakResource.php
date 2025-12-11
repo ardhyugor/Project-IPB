@@ -65,11 +65,11 @@ class ArsipPersonalNonPnsKontrakResource extends Resource
                 Forms\Components\DatePicker::make('TANGGALLAHIR')
                     ->label('Tanggal Lahir')
                     ->required()
-                    ->format('Y-m-d'), // simpan sebagai string "2025-10-20"
+                    ->format('Y-m-d'), 
                 Forms\Components\DatePicker::make('TANGGALANGKAT')
                     ->label('TMT')
                     ->required()
-                    ->format('Y'), // misal cuma tahun, tetap string
+                    ->format('Y'), 
                 Forms\Components\Select::make('UNIT')
                     ->label('Unit Kerja')
                     ->required()
@@ -192,13 +192,13 @@ class ArsipPersonalNonPnsKontrakResource extends Resource
                             return str_contains(strtolower($folder), strtolower($keyword));
                         });
 
+                        // dd($keyword);
 
                         if (!$matchedFolder) {
                             return new \Illuminate\Support\HtmlString('<p class="text-gray-500">Tidak ditemukan folder untuk NIP/Nama ini.</p>');
                         }
 
                         $files = Storage::disk('public')->files($matchedFolder);
-                        // dd($files);
 
                         if (empty($files)) {
                             return new \Illuminate\Support\HtmlString('<p class="text-gray-500">Folder ditemukan, tapi tidak ada file di dalamnya.</p>');
