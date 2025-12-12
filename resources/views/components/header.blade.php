@@ -1,16 +1,16 @@
 <!-- NAVBAR -->
 <header class="fixed top-0 left-0 w-full z-50 bg-blue-900/80 backdrop-blur-md">
     <div class="w-full px-6 py-4 flex items-center justify-between">
-      <!-- Logo & Brand -->
-      <div class="flex items-center gap-3">
-        <a href="/">
-          <img src="img/logos.png" class="h-12 w-12" alt="Logo IPB">
-        </a>
-        <div class="text-white">
-          <h1 class="text-xl font-bold">Layanan Arsip</h1>
-          <p class="text-xs text-gray-200">Direktorat SDM IPB</p>
+        <!-- Logo & Brand -->
+        <div class="flex items-center gap-3">
+            <a href="/">
+                <img src="img/logos.png" class="h-12 w-12" alt="Logo IPB">
+            </a>
+            <div class="text-white">
+                <h1 class="text-xl font-bold">Layanan Arsip</h1>
+                <p class="text-xs text-gray-200">Direktorat SDM IPB</p>
+            </div>
         </div>
-      </div>
 
         <!-- Desktop Menu -->
         <div class="hidden md:flex gap-8">
@@ -76,7 +76,7 @@
 
                     <!-- PRIVACY Section -->
                     <div class="px-4 py-2">
-                    
+
 
                         <a href="{{ route('kebijakan') }}"
                             class="flex items-start gap-3 px-3 py-2 text-gray-800 hover:bg-blue-50 rounded transition mb-2">

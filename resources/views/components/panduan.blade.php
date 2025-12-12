@@ -101,7 +101,7 @@
                 controlsList="nodownload"
                 class="w-full h-full object-cover"
                 poster="https://via.placeholder.com/1280x720/1a1a1a/ffffff?text=Video+Panduan+Layanan+Arsip">
-                <source id="videoSource" src="img/Aka.mp4" type="video/mp4">
+                <source id="videoSource" src="img/dummy.mp4" type="video/mp4">
                 <p class="text-white">Maaf, browser Anda tidak mendukung video HTML5.</p>
               </video>
               

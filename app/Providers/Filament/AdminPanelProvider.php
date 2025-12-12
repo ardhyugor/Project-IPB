@@ -51,21 +51,22 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Pages\Dashboard::class,
             ])
+            
+            // ✅ Plugins digabung di sini
             ->plugins([
+                FilamentShieldPlugin::make(),
+
                 EasyFooterPlugin::make()
-                    ->withLinks(
-                        [
-                            ['title' => 'About', 'url' => 'https://example.com/about'],
-                            ['title' => 'CGV', 'url' => 'https://example.com/cgv'],
-                            ['title' => 'Privacy Policy', 'url' => 'https://example.com/privacy-policy']
-                        ]
-                    )
+                    ->withLinks([
+                        ['title' => 'About', 'url' => 'https://example.com/about'],
+                        ['title' => 'CGV', 'url' => 'https://example.com/cgv'],
+                        ['title' => 'Privacy Policy', 'url' => 'https://example.com/privacy-policy'],
+                    ]),
             ])
+
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-
-
-                BlogPostsChart::class, // Widget Chart
+                BlogPostsChart::class,
                 \App\Filament\Widgets\AgendaBerkasPerBulan::class,
             ])
             ->middleware([
@@ -78,10 +79,6 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-            ])
-            ->plugins([
-                FilamentShieldPlugin::make(),
-                
             ])
             ->authMiddleware([
                 Authenticate::class,

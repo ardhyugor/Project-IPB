@@ -1,165 +1,173 @@
-    <section id="information"></section>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+<section id="information"></section>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    /* Card Hover Effects */
+    .category-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+    }
+
+    .category-card:hover {
+        transform: translateY(-8px);
+    }
+
+    .icon-wrapper {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .category-card:hover .icon-wrapper {
+        transform: scale(1.15) rotate(5deg);
+    }
+
+    /* Scroll Animation Classes */
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .animate-on-scroll.animated {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Delay Classes untuk Stagger Effect */
+    .delay-1 {
+        transition-delay: 0.1s;
+    }
+
+    .delay-2 {
+        transition-delay: 0.3s;
+    }
+
+    .delay-3 {
+        transition-delay: 0.5s;
+    }
+
+    /* Background Decoration Animation */
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0) rotate(12deg);
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        50% {
+            transform: translateY(-20px) rotate(12deg);
         }
+    }
 
-        /* Card Hover Effects */
-        .category-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-        }
-        
-        .category-card:hover {
-            transform: translateY(-8px);
-        }
-        
-        .icon-wrapper {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .category-card:hover .icon-wrapper {
-            transform: scale(1.15) rotate(5deg);
-        }
+    .floating-decoration:nth-child(1) {
+        animation: float 8s ease-in-out infinite;
+    }
 
-        /* Scroll Animation Classes */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
+    .floating-decoration:nth-child(2) {
+        animation: float 10s ease-in-out infinite 2s;
+    }
 
-        .animate-on-scroll.animated {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .floating-decoration:nth-child(3) {
+        animation: float 12s ease-in-out infinite 4s;
+    }
 
-        /* Delay Classes untuk Stagger Effect */
-        .delay-1 {
-            transition-delay: 0.1s;
-        }
+    /* Expandable Card Styles */
+    .card-wrapper {
+        position: relative;
+    }
 
-        .delay-2 {
-            transition-delay: 0.3s;
-        }
+    .card-container {
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        z-index: 1;
+    }
 
-        .delay-3 {
-            transition-delay: 0.5s;
-        }
+    .card-container.expanded {
+        z-index: 50;
+    }
 
-        /* Background Decoration Animation */
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(12deg); }
-            50% { transform: translateY(-20px) rotate(12deg); }
-        }
+    .card-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        .floating-decoration:nth-child(1) {
-            animation: float 8s ease-in-out infinite;
-        }
+    .card-content.expanded {
+        max-height: 600px;
+    }
 
-        .floating-decoration:nth-child(2) {
-            animation: float 10s ease-in-out infinite 2s;
-        }
+    .info-section {
+        padding: 24px 0;
+        border-top: 2px solid #f1f5f9;
+    }
 
-        .floating-decoration:nth-child(3) {
-            animation: float 12s ease-in-out infinite 4s;
-        }
+    .info-section:first-child {
+        border-top: none;
+    }
 
-        /* Expandable Card Styles */
-        .card-wrapper {
-            position: relative;
-        }
+    .info-item {
+        margin-bottom: 16px;
+    }
 
-        .card-container {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            z-index: 1;
-        }
+    .info-item:last-child {
+        margin-bottom: 0;
+    }
 
-        .card-container.expanded {
-            z-index: 50;
-        }
+    .info-label {
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
 
-        .card-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    .info-text {
+        color: #64748b;
+        line-height: 1.6;
+    }
 
-        .card-content.expanded {
-            max-height: 600px;
-        }
+    .expand-icon {
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        .info-section {
-            padding: 24px 0;
-            border-top: 2px solid #f1f5f9;
-        }
+    .expand-icon.rotated {
+        transform: rotate(180deg);
+    }
 
-        .info-section:first-child {
-            border-top: none;
-        }
+    .expanded-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: transparent;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s;
+        z-index: 40;
+    }
 
-        .info-item {
-            margin-bottom: 16px;
-        }
-
-        .info-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .info-label {
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .info-text {
-            color: #64748b;
-            line-height: 1.6;
-        }
-
-        .expand-icon {
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .expand-icon.rotated {
-            transform: rotate(180deg);
-        }
-
-        .expanded-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: transparent;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
-            z-index: 40;
-        }
-
-        .expanded-overlay.active {
-            opacity: 0;
-            visibility: visible;
-        }
-    </style>
+    .expanded-overlay.active {
+        opacity: 0;
+        visibility: visible;
+    }
+</style>
 </head>
+
 <body class="bg-gradient-to-b from-slate-50 to-slate-100 min-h-screen py-16">
 
     <div class="container mx-auto px-4">
-        
+
         <!-- Title Section -->
         <div class="text-center mb-16 animate-on-scroll">
             <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
@@ -170,11 +178,12 @@
 
         <!-- Categories Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12 relative" id="cardsContainer">
-            
+
             <!-- Card 1: Jadwal -->
             <div class="animate-on-scroll delay-1 card-wrapper">
-                <div class="card-container category-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300" data-card="jadwal">
-                    
+                <div class="card-container category-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300"
+                    data-card="jadwal">
+
                     <!-- Card Header -->
                     <div class="cursor-pointer" onclick="toggleCard(event)">
                         <!-- Icon -->
@@ -188,7 +197,8 @@
                         <div class="w-16 h-1 bg-gradient-to-r from-red-400 to-red-600 mx-auto mb-6"></div>
 
                         <!-- Title -->
-                        <h3 class="text-xl font-bold text-blue-600 hover:text-blue-800 text-center mb-4 transition-colors">
+                        <h3
+                            class="text-xl font-bold text-blue-600 hover:text-blue-800 text-center mb-4 transition-colors">
                             Jadwal Operasional
                         </h3>
 
@@ -234,13 +244,15 @@
 
             <!-- Card 2: Berita Terbaru -->
             <div class="animate-on-scroll delay-2 card-wrapper">
-                <div class="card-container category-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300" data-card="berita">
-                    
+                <div class="card-container category-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300"
+                    data-card="berita">
+
                     <!-- Card Header -->
                     <div class="cursor-pointer" onclick="toggleCard(event)">
                         <!-- Icon -->
                         <div class="flex justify-center mb-6">
-                            <div class="icon-wrapper w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center">
+                            <div
+                                class="icon-wrapper w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center">
                                 <i class="fas fa-newspaper text-3xl text-blue-500"></i>
                             </div>
                         </div>
@@ -249,7 +261,8 @@
                         <div class="w-16 h-1 bg-gradient-to-r from-blue-400 to-blue-600 mx-auto mb-6"></div>
 
                         <!-- Title -->
-                        <h3 class="text-xl font-bold text-blue-600 hover:text-blue-800 text-center mb-4 transition-colors">
+                        <h3
+                            class="text-xl font-bold text-blue-600 hover:text-blue-800 text-center mb-4 transition-colors">
                             Berita Terbaru
                         </h3>
 
@@ -272,21 +285,33 @@
                                     <i class="fas fa-newspaper text-blue-500"></i>
                                     Berita Utama
                                 </div>
-                                <div class="info-text">-</div>
+                                <div class="info-text">Layanan Arsip PAu SDM kini menerapkan sistem digitalisasi arsip
+                                    untuk
+                                    meningkatkan efisiensi, keamanan, dan kemudahan akses bagi seluruh
+                                    pengguna layanan di lingkungan Direktorat SDM IPB University.
+                                </div>
                             </div>
                             <div class="info-item">
                                 <div class="info-label">
                                     <i class="fas fa-bullhorn text-blue-500"></i>
                                     Pengumuman
                                 </div>
-                                <div class="info-text">-</div>
+                                <div class="info-text">Mulai Januari 2025, seluruh permohonan peminjaman dan
+                                    pengembalian
+                                    arsip wajib dilakukan melalui sistem e-Arsip untuk memastikan proses
+                                    pencatatan lebih terstruktur dan terdokumentasi.
+                                </div>
                             </div>
                             <div class="info-item">
                                 <div class="info-label">
                                     <i class="fas fa-award text-blue-500"></i>
                                     Pencapaian
                                 </div>
-                                <div class="info-text">-</div>
+                                <div class="info-text">Unit Arsip PAU SDM berhasil mendapatkan pengakuan Sertifikasi
+                                    ANRI atas
+                                    penerapan standar pengelolaan arsip dinamis dan statis yang sesuai
+                                    ketentuan nasional.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -295,13 +320,15 @@
 
             <!-- Card 3: F.A.Q -->
             <div class="animate-on-scroll delay-3 card-wrapper">
-                <div class="card-container category-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300" data-card="faq">
-                    
+                <div class="card-container category-card bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-slate-200 hover:border-slate-300 transition-all duration-300"
+                    data-card="faq">
+
                     <!-- Card Header -->
                     <div class="cursor-pointer" onclick="toggleCard(event)">
                         <!-- Icon -->
                         <div class="flex justify-center mb-6">
-                            <div class="icon-wrapper w-20 h-20 bg-teal-50 rounded-full flex items-center justify-center">
+                            <div
+                                class="icon-wrapper w-20 h-20 bg-teal-50 rounded-full flex items-center justify-center">
                                 <i class="fas fa-circle-question text-3xl text-teal-500"></i>
                             </div>
                         </div>
@@ -310,7 +337,8 @@
                         <div class="w-16 h-1 bg-gradient-to-r from-teal-400 to-teal-600 mx-auto mb-6"></div>
 
                         <!-- Title -->
-                        <h3 class="text-xl font-bold text-blue-600 hover:text-blue-800 text-center mb-4 transition-colors">
+                        <h3
+                            class="text-xl font-bold text-blue-600 hover:text-blue-800 text-center mb-4 transition-colors">
                             F.A.Q
                         </h3>
 
@@ -333,15 +361,19 @@
                                     <i class="fas fa-question text-teal-500"></i>
                                     Apa itu arsip kepegawaian?
                                 </div>
-                                <div class="info-text">Arsip kepegawaian adalah dokumen yang berisi informasi mengenai riwayat dan data pegawai selama bekerja di institusi, meliputi SK pengangkatan, kenaikan pangkat, mutasi, cuti, penghargaan, hingga pemberhentian. Arsip ini merupakan bukti akuntabilitas dan referensi penting dalam pengelolaan SDM.
-</div>
+                                <div class="info-text">Arsip kepegawaian adalah dokumen yang berisi informasi mengenai
+                                    riwayat dan data pegawai selama bekerja di institusi, meliputi SK pengangkatan,
+                                    kenaikan pangkat, mutasi, cuti, penghargaan, hingga pemberhentian. Arsip ini
+                                    merupakan bukti akuntabilitas dan referensi penting dalam pengelolaan SDM.
+                                </div>
                             </div>
                             <div class="info-item">
                                 <div class="info-label">
                                     <i class="fas fa-question text-teal-500"></i>
                                     Bagaimana cara mengajukan permintaan arsip kepegawaian?
                                 </div>
-                                <div class="info-text">Ajukan permintaan melalui portal resmi atau langsung ke bagian kearsipan dengan melampirkan:
+                                <div class="info-text">Ajukan permintaan melalui portal resmi atau langsung ke bagian
+                                    kearsipan dengan melampirkan:
                                     <p>1 Formulir permintaan arsip</p>
                                     <p>2. Identitas pemohon (KTP/ID Card pegawai)</p>
                                     <p>3. Surat tugas/izin dari atasan (jika diperlukan)</p>
@@ -369,9 +401,15 @@
 
     <!-- Background Decorations -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-        <div class="floating-decoration absolute top-20 right-20 w-48 h-48 border-2 border-slate-200 rounded-lg opacity-20"></div>
-        <div class="floating-decoration absolute bottom-20 left-20 w-40 h-40 border-2 border-slate-200 rounded-lg opacity-15 transform -rotate-6"></div>
-        <div class="floating-decoration absolute top-1/2 left-1/3 w-32 h-32 border-2 border-slate-200 rounded-lg opacity-20 transform rotate-45"></div>
+        <div
+            class="floating-decoration absolute top-20 right-20 w-48 h-48 border-2 border-slate-200 rounded-lg opacity-20">
+        </div>
+        <div
+            class="floating-decoration absolute bottom-20 left-20 w-40 h-40 border-2 border-slate-200 rounded-lg opacity-15 transform -rotate-6">
+        </div>
+        <div
+            class="floating-decoration absolute top-1/2 left-1/3 w-32 h-32 border-2 border-slate-200 rounded-lg opacity-20 transform rotate-45">
+        </div>
     </div>
 
     <!-- Script -->
@@ -390,7 +428,7 @@
         // Fungsi untuk menambahkan class animated
         function animateOnScroll() {
             const elements = document.querySelectorAll('.animate-on-scroll');
-            
+
             elements.forEach(element => {
                 if (isInViewport(element)) {
                     element.classList.add('animated');
@@ -401,7 +439,7 @@
         // Fungsi untuk toggle card
         function toggleCard(event) {
             event.stopPropagation();
-            
+
             const cardContainer = event.currentTarget.closest('.card-container');
             const cardContent = cardContainer.querySelector('.card-content');
             const expandIcon = event.currentTarget.querySelector('.expand-icon');
@@ -416,7 +454,7 @@
             } else {
                 // Tutup semua card yang terbuka
                 closeAllCards();
-                
+
                 // Buka card yang diklik
                 cardContainer.classList.add('expanded');
                 cardContent.classList.add('expanded');
@@ -442,7 +480,7 @@
         window.addEventListener('scroll', animateOnScroll);
 
         // Jalankan sekali di awal
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             setTimeout(animateOnScroll, 100);
         });
 
@@ -451,4 +489,5 @@
     </script>
 
 </body>
+
 </html>
