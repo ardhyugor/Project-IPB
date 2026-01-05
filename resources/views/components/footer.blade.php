@@ -274,7 +274,7 @@
             <div class="text-center fade-in-up">
                 <p class="text-slate-800 font-medium flex items-center justify-center gap-2 flex-wrap">
                     <i class="fas fa-copyright text-amber-400"></i>
-                    <span class="text-white">Hak Cipta © 2024. Layanan Arsip SDM - Direktorat IPB University</span>
+                    <span class="text-white">Hak Cipta © 2024. Layanan Arsip SDM - Ruang Arsip PAU Direktorat IPB University</span>
                 </p>
                 <p class="text-blue-100 text-sm mt-2">
                     Dibuat dengan <i class="fas fa-heart text-red-400 animate-pulse"></i> untuk melayani lebih baik

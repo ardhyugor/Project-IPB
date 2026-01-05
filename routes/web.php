@@ -20,8 +20,7 @@ Route::get('/cetak-layanan/{no}', [LayananBerkasController::class, 'cetak'])
 
 Route::get('/', function(){
     return view('pages.home');
-});
-
+})->name('home');
 
 Route::get('infografis', function(){
     return view('pages.infografis');
